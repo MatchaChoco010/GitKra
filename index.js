@@ -63,7 +63,7 @@ async function main() {
   }
 
   for (let n = 0; n < i; n++) {
-    fs.rename(`${outDir}/tmp${n}.png`, `${outDir}${i - n - 1}.png`, err => {
+    fs.rename(`${outDir}/tmp${n}.png`, `${outDir}/${i - n - 1}.png`, err => {
       if (err) throw err
     })
   }
