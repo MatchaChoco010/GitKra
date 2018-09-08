@@ -42,6 +42,12 @@ async function main() {
 
   console.log(`\nCurrent Hash: ${currentHash}\n`)
 
+  process.on('SIGINT', () => {
+    console.log('Caught interrupt signal')
+    git.checkoutSync(currentHash)
+    process.exit()
+  })
+
   let i = 0
 
   try {
@@ -50,10 +56,10 @@ async function main() {
 
       i++
 
-      await git.checkoutParent()
+      git.checkoutParentSync()
     }
   } catch {
-    await git.checkout(currentHash)
+    git.checkoutSync(currentHash)
   }
 
   for (let n = 0; n < i; n++) {

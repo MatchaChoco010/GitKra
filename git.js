@@ -1,35 +1,21 @@
-const exec = require('child_process').exec
+const child_process = require('child_process')
 
 const git = {
   getCurrentHash() {
     return new Promise((resolve, reject) => {
-      exec('git rev-parse HEAD', (err, stdout, stderr) => {
+      child_process.exec('git rev-parse HEAD', (err, stdout, stderr) => {
         if (err) reject(err)
         resolve(stdout)
       })
     })
   },
 
-  checkout(hash) {
-    return new Promise((resolve, reject) => {
-      exec(`git checkout ${hash}`, (err, stdout, stderr) => {
-        if (err) reject(err)
-        console.log(stdout)
-        console.log(stderr)
-        resolve()
-      })
-    })
+  checkoutSync(hash) {
+    child_process.execSync(`git checkout ${hash}`)
   },
 
-  checkoutParent() {
-    return new Promise((resolve, reject) => {
-      exec('git checkout HEAD^', (err, stdout, stderr) => {
-        if (err) reject(err)
-        console.log(stdout)
-        console.log(stderr)
-        resolve()
-      })
-    })
+  checkoutParentSync() {
+    child_process.execSync('git checkout HEAD^')
   }
 }
 
