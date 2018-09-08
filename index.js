@@ -16,7 +16,7 @@ async function main() {
     .parse(process.argv)
 
   const repositoryPath = program.repositoryPath
-  const outDir = path.join(process.cwd(), program.outDir)
+  const outDir = path.normalize(path.join(process.cwd(), program.outDir))
   const filename = program.filename || 'illust.kra'
 
   if (repositoryPath === undefined) {
@@ -46,7 +46,7 @@ async function main() {
 
   try {
     while (true) {
-      await kra2png(filename, `${outDir}tmp${i}.png`)
+      await kra2png(filename, `${outDir}/tmp${i}.png`)
 
       i++
 
@@ -57,7 +57,7 @@ async function main() {
   }
 
   for (let n = 0; n < i; n++) {
-    fs.rename(`${outDir}tmp${n}.png`, `${outDir}${i - n - 1}.png`, err => {
+    fs.rename(`${outDir}/tmp${n}.png`, `${outDir}${i - n - 1}.png`, err => {
       if (err) throw err
     })
   }
